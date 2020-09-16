@@ -1,10 +1,10 @@
 import React from "react";
-import HomePage from "./HomePage/HomePage";
+import StartBookingPage from "./StartBookingPage/StartBookingPage";
 
 const Main = () => {
     return (
         <div>
-            <HomePage />
+            <StartBookingPage />
         </div>
     );
 };
