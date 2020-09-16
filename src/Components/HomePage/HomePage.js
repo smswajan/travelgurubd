@@ -6,7 +6,7 @@ import "./HomePage.scss";
 const HomePage = () => {
     return (
         <Layout>
-            <HeaderComponent />
+            <HeaderComponent variant="light" />
             <div className="py-5 container text-white mt-5 pt-5">
                 <div className="row d-flex align-items-center mt-5">
                     <div className="col-md-5">

@@ -6,7 +6,7 @@ import "./StartBookingPage.scss";
 const StartBookingPage = () => {
     return (
         <Layout>
-            <HeaderComponent />
+            <HeaderComponent variant="dark" />
 
             <div className="py-5 container text-white mt-5 pt-5">
                 <div className="row d-flex align-items-center pt-5 mt-5">

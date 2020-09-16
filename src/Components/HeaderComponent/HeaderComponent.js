@@ -8,10 +8,11 @@ import {
     Navbar,
 } from "react-bootstrap";
 
-const HeaderComponent = () => {
+const HeaderComponent = (props) => {
+    const headerVariant = props.variant;
     return (
         <div>
-            <Navbar bg="transparent" variant="dark">
+            <Navbar bg="transparent" variant={headerVariant}>
                 <Container>
                     <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                     <Nav className="mr-auto">

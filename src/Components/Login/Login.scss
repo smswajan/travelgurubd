@@ -1,0 +1,22 @@
+.auth-form input {
+    margin-bottom: 26px;
+}
+.auth-form input.form-control {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    color: black;
+}
+.auth-form {
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+.custom-auth-btn {
+    border-radius: 30px;
+
+    border: 1px solid gray;
+}
+.custom-auth-btn:hover {
+    background-color: #f9a51a;
+}
