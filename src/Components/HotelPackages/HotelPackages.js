@@ -4,7 +4,6 @@ import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import LayoutWhite from "../LayoutWhite/LayoutWhite";
 import PackageComponent from "../PackageComponent/PackageComponent";
 import "./HotelPackages.scss";
-import { Map, GoogleApiWrapper } from "google-maps-react";
 import GoogleMap from "../GoogleMap/GoogleMap";
 
 const HotelPackages = () => {
