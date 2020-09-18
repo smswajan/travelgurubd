@@ -8,6 +8,9 @@ import ImgHotelOne from "./hotel 1.png";
 import LogoDark from "./logo-dark.png";
 import LogoWhite from "./logo-white.png";
 
+import IcoFB from "./fb.png";
+import IcoGL from "./google.png";
+
 export {
     ImgCoxBazar,
     ImgSajek,
@@ -16,4 +19,6 @@ export {
     ImgHotelOne,
     LogoDark,
     LogoWhite,
+    IcoFB,
+    IcoGL,
 };

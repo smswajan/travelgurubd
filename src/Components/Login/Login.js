@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { withRouter, Redirect, useHistory, useLocation } from "react-router";
 import app from "../../firebaseConfig";
 import { AuthContext } from "../../utils/useAuth";
+import { IcoGL, IcoFB } from "../../images";
+import * as firebase from "firebase/app";
 
 const Login = () => {
     const [returningUser, setReturningUser] = useState(false);
@@ -26,6 +28,53 @@ const Login = () => {
         },
         [history]
     );
+    const onCreateSubmit = useCallback(
+        async (data) => {
+            const { email, password, firstName } = data;
+            try {
+                await app
+                    .auth()
+                    .createUserWithEmailAndPassword(email, password);
+                history.replace(from);
+            } catch (error) {
+                alert(error);
+            }
+        },
+        [history]
+    );
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const handleSignInWithGoogle = () => {
+        app.auth()
+            .signInWithPopup(provider)
+            .then(function (result) {
+                var token = result.credential.accessToken;
+                var user = result.user;
+                console.log(user);
+            })
+            .catch(function (error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                var email = error.email;
+                var credential = error.credential;
+            });
+    };
+    const fbProvider = new firebase.auth.FacebookAuthProvider();
+    const handleSignInWithFb = () => {
+        app.auth()
+            .signInWithPopup(provider)
+            .then(function (result) {
+                var token = result.credential.accessToken;
+                var user = result.user;
+                console.log(user);
+            })
+            .catch(function (error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                var email = error.email;
+                var credential = error.credential;
+            });
+    };
+
     const { user } = useContext(AuthContext);
     if (user) {
         return <Redirect to="/" />;
@@ -43,7 +92,9 @@ const Login = () => {
                                     onSubmit={handleSubmit(onSubmit)}
                                     className=""
                                 >
-                                    <h3 className="mb-5">Create an account</h3>
+                                    <h3 className="mb-5">
+                                        Login to your account
+                                    </h3>
 
                                     <input
                                         placeholder="Username or Email"
@@ -64,7 +115,7 @@ const Login = () => {
                                         className="btn btn-primary btn-lg btn-block"
                                         type="submit"
                                     >
-                                        Create an account
+                                        Login
                                     </button>
                                 </form>
                                 <p className="text-center mt-3">
@@ -80,7 +131,7 @@ const Login = () => {
                         ) : (
                             <div className="auth-form p-5">
                                 <form
-                                    onSubmit={handleSubmit(onSubmit)}
+                                    onSubmit={handleSubmit(onCreateSubmit)}
                                     className=""
                                 >
                                     <h3 className="mb-5">Create an account</h3>
@@ -168,11 +219,18 @@ const Login = () => {
                         )}
 
                         <div className="p-5">
-                            <button className="btn custom-auth-btn btn-block py-3 mb-3 ">
-                                Continue with Facebook
+                            <button
+                                onClick={handleSignInWithGoogle}
+                                className="btn custom-auth-btn btn-block py-3 mb-3 "
+                            >
+                                <img src={IcoGL} alt="" /> Continue with Google
                             </button>
-                            <button className="btn custom-auth-btn btn-block py-3  ">
-                                Continue with Facebook
+                            <button
+                                onClick={handleSignInWithFb}
+                                className="btn custom-auth-btn btn-block py-3  "
+                            >
+                                <img src={IcoFB} alt="" /> Continue with
+                                Facebook
                             </button>
                         </div>
                     </div>

@@ -29,10 +29,10 @@ const HeaderComponent = (props) => {
                         />
                     </Navbar.Brand>
                     <Nav className="ml-auto">
-                        <Nav.Link className="mr-4" href="/destinations">
+                        <Nav.Link className="mr-4" href="/">
                             Destination
                         </Nav.Link>
-                        <Nav.Link className="mr-4" href="/packages">
+                        <Nav.Link className="mr-4" href="/">
                             packages
                         </Nav.Link>
                         <Nav.Link className="mr-4" href="/">
