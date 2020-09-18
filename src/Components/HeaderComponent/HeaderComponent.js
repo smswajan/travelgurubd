@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
     Button,
     Container,
@@ -7,27 +7,53 @@ import {
     Nav,
     Navbar,
 } from "react-bootstrap";
+import app from "../../firebaseConfig";
+import { LogoDark, LogoWhite } from "../../images";
+import { AuthContext } from "../../utils/useAuth";
+import "./HeaderComponent.scss";
 
 const HeaderComponent = (props) => {
     const headerVariant = props.variant;
+    const { user } = useContext(AuthContext);
     return (
         <div>
             <Navbar bg="transparent" variant={headerVariant}>
                 <Container>
-                    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-                    <Nav className="mr-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#features">Features</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
-                    </Nav>
-                    <Form inline>
-                        <FormControl
-                            type="text"
-                            placeholder="Search"
-                            className="mr-sm-2"
+                    <Navbar.Brand href="/">
+                        <img
+                            src={
+                                headerVariant === "dark" ? LogoWhite : LogoDark
+                            }
+                            alt=""
+                            className="logo"
                         />
-                        <Button variant="outline-light">Search</Button>
-                    </Form>
+                    </Navbar.Brand>
+                    <Nav className="ml-auto">
+                        <Nav.Link className="mr-4" href="/destinations">
+                            Destination
+                        </Nav.Link>
+                        <Nav.Link className="mr-4" href="/packages">
+                            packages
+                        </Nav.Link>
+                        <Nav.Link className="mr-4" href="/">
+                            Blog
+                        </Nav.Link>
+                        <Nav.Link className="mr-4" href="/">
+                            Contact
+                        </Nav.Link>
+                        {!!user ? (
+                            <button
+                                onClick={() => app.auth().signOut()}
+                                className="btn btn-primary"
+                            >
+                                Sign Out
+                            </button>
+                        ) : (
+                            <Nav.Link href="/login" className="btn btn-primary">
+                                Login
+                            </Nav.Link>
+                        )}
+                    </Nav>
                 </Container>
             </Navbar>
         </div>

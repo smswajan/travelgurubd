@@ -1,36 +1,40 @@
-import * as firebase from "firebase/app";
-import "firebase/auth";
 import React, { useState, createContext, useContext, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
-import firebaseConfig from "../firebaseConfig";
+import app from "../firebaseConfig";
 
-firebase.initializeApp(firebaseConfig);
+export const AuthContext = React.createContext();
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [pending, setPending] = useState(true);
 
-const AuthContext = createContext();
-export const AuthProvider = (props) => {
-    const auth = Auth();
+    useEffect(() => {
+        app.auth().onAuthStateChanged((usr) => {
+            setUser(usr);
+            setPending(false);
+        });
+    }, []);
+    if (pending) {
+        return <>Loading...</>;
+    }
     return (
-        <AuthContext.Provider value={auth}>
-            {" "}
-            {props.children}{" "}
-        </AuthContext.Provider>
+        <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
     );
 };
-export const useAuth = () => useContext(AuthContext);
+// export const useAuth = () => useContext(AuthContext);
 
-export const PrivateRoute = ({ children, ...rest }) => {
-    const auth = useAuth();
+export const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
+    const { user } = useContext(AuthContext);
     return (
         <Route
             {...rest}
-            render={({ location }) =>
-                auth.user ? (
-                    children
+            render={(routeProps) =>
+                !!user ? (
+                    <RouteComponent {...routeProps} />
                 ) : (
                     <Redirect
                         to={{
                             pathname: "/login",
-                            state: { from: location },
+                            state: { from: routeProps.location },
                         }}
                     />
                 )
@@ -41,54 +45,53 @@ export const PrivateRoute = ({ children, ...rest }) => {
 
 const Auth = () => {
     const [user, setUser] = useState(null);
+    const [pending, setPending] = useState(true);
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged(function (user) {
+        app.auth().onAuthStateChanged(function (user) {
             if (user) {
                 const currUser = user;
                 setUser(currUser);
+                setPending(false);
             }
         });
     }, []);
 
     const signIn = (email, password) => {
-        return firebase
+        return app
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then((res) => {
-                setUser(res.user);
+                console.log("Auth page", res.user);
                 window.history.back();
             })
-            .catch((err) => setUser({ error: err.message }));
+            .catch((err) => alert(err));
     };
 
     const signUp = (email, password, name) => {
-        console.log(email, password, name);
-        return firebase
+        return app
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then((res) => {
-                firebase
-                    .auth()
+                app.auth()
                     .currentUser.updateProfile({
                         displayName: name,
                     })
                     .then(() => {
-                        setUser(res.user);
                         window.history.back();
                     });
             })
-            .catch((err) => setUser({ error: err.message }));
+            .catch((err) => alert(err));
     };
 
     const signOut = () => {
-        return firebase
+        return app
             .auth()
             .signOut()
-            .then((res) => setUser(null));
+            .then((res) => console.log(res.user))
+            .catch((err) => alert(err));
     };
     return {
-        user,
         signIn,
         signUp,
         signOut,

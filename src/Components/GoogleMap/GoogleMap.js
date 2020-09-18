@@ -13,6 +13,7 @@ const GoogleMap = ({ location, zoomLevel }) => {
                     }}
                     defaultCenter={location}
                     defaultZoom={zoomLevel}
+                    yesIWantToUseGoogleMapApiInternals
                 >
                     <LocationPin
                         lat={location.lat}

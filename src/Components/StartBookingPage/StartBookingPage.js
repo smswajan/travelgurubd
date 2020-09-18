@@ -1,9 +1,14 @@
 import React from "react";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import destinationData from "../../demoData/destinations";
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import Layout from "../Layout/Layout";
 import "./StartBookingPage.scss";
 
 const StartBookingPage = () => {
+    const { place } = useParams();
+    const placeInfo = destinationData.find((item) => item.key === place);
     return (
         <Layout>
             <HeaderComponent variant="dark" />
@@ -11,7 +16,7 @@ const StartBookingPage = () => {
             <div className="py-5 container text-white mt-5 pt-5">
                 <div className="row d-flex align-items-center pt-5 mt-5">
                     <div className="col-md-6">
-                        <h1 className="h1">COX'S BAZAR</h1>
+                        <h1 className="h1">{placeInfo.spotName} </h1>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Obcaecati, ducimus soluta blanditiis porro
@@ -29,7 +34,7 @@ const StartBookingPage = () => {
                                         type="text"
                                         className="form-control"
                                         id="origin"
-                                        placeholder="Dhaka"
+                                        placeholder="DHAKA"
                                     />
                                 </div>
                                 <div className="form-group">
@@ -38,7 +43,7 @@ const StartBookingPage = () => {
                                         type="text"
                                         className="form-control"
                                         id="destination"
-                                        placeholder="Cox's Bazar"
+                                        placeholder={placeInfo.spotName}
                                     />
                                 </div>
 
@@ -70,9 +75,13 @@ const StartBookingPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <button className="btn-lg btn-block d-block btn btn-primary">
+
+                                <Link
+                                    to={"/booking/" + placeInfo.key}
+                                    className="btn-lg btn-block d-block btn btn-primary"
+                                >
                                     Start Booking
-                                </button>
+                                </Link>
                             </form>
                         </div>
                     </div>

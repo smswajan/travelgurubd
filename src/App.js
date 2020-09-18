@@ -4,11 +4,14 @@ import "./App.css";
 
 import Layout from "./Components/Layout/Layout";
 import Main from "./Components/Main";
+import { AuthProvider } from "./utils/useAuth";
 
 function App() {
     return (
         <>
-            <Main />
+            <AuthProvider>
+                <Main />
+            </AuthProvider>
         </>
     );
 }

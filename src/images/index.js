@@ -5,4 +5,15 @@ import ImgSundorbon from "./sundorbon.png";
 
 import ImgHotelOne from "./hotel 1.png";
 
-export { ImgCoxBazar, ImgSajek, ImgSreemongol, ImgSundorbon, ImgHotelOne };
+import LogoDark from "./logo-dark.png";
+import LogoWhite from "./logo-white.png";
+
+export {
+    ImgCoxBazar,
+    ImgSajek,
+    ImgSreemongol,
+    ImgSundorbon,
+    ImgHotelOne,
+    LogoDark,
+    LogoWhite,
+};

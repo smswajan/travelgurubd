@@ -1,35 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { Container } from "react-bootstrap";
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import LayoutWhite from "../LayoutWhite/LayoutWhite";
 import "./Login.scss";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../utils/useAuth";
+import { withRouter, Redirect, useHistory, useLocation } from "react-router";
+import app from "../../firebaseConfig";
+import { AuthContext } from "../../utils/useAuth";
 
 const Login = () => {
     const [returningUser, setReturningUser] = useState(false);
+    let history = useHistory();
+    let location = useLocation();
+    let { from } = location.state || { from: { pathname: "/" } };
     const { register, handleSubmit, watch, errors } = useForm();
-    const auth = useAuth();
-    const onSubmit = (data) => {
-        console.log(data);
-        if (returningUser) {
-            if (data.email && data.password) {
-                console.log("Previous");
-                auth.signIn(data.email, data.password);
+    const onSubmit = useCallback(
+        async (data) => {
+            const { email, password } = data;
+            try {
+                await app.auth().signInWithEmailAndPassword(email, password);
+                history.replace(from);
+            } catch (error) {
+                alert(error);
             }
-        } else {
-            if (
-                data.firstName &&
-                data.email &&
-                data.password &&
-                data.confirm_password
-            ) {
-                console.log("new");
-                auth.signUp(data.email, data.confirm_password, data.name);
-            }
-        }
-    };
-
+        },
+        [history]
+    );
+    const { user } = useContext(AuthContext);
+    if (user) {
+        return <Redirect to="/" />;
+    }
     return (
         <LayoutWhite>
             <HeaderComponent variant="light" />
@@ -183,4 +183,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default withRouter(Login);

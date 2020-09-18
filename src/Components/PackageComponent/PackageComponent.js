@@ -2,28 +2,34 @@ import React from "react";
 import { ImgHotelOne } from "../../images";
 import "./PackageComponent.scss";
 import { FaStar } from "react-icons/fa";
+import packageData from "../../demoData/packageData";
 
-const PackageComponent = () => {
+const PackageComponent = ({ pack, place }) => {
     return (
         <div className="row mb-5">
             <div className="col-md-5">
-                <img src={ImgHotelOne} alt="" className="img-fluid" />
+                <img src={pack.img} alt="" className="img-fluid" />
             </div>
             <div className="col-md-7">
-                <h5>Stylish fresh airy appartment and room</h5>
-                <p>2 bed, 2 bath, 4 Guests</p>
-                <p>Wif air condition kitchen</p>
-                <p>Cancellation flexibility available</p>
+                <h5>{pack.title} </h5>
+                <p>
+                    {pack.guests} guests, {pack.bedrooms} bedrooms, {pack.beds}
+                    beds, {pack.baths} baths
+                </p>
+                <p className="mb-0">{pack.facility}</p>
+                <p className="mb-0">Cancellation flexibility available</p>
                 <div className="d-flex justify-content-between">
                     <div>
                         <FaStar className="text-primary" />{" "}
-                        <strong>4.9(20)</strong>
+                        <strong>
+                            {pack.rating} ({pack.users})
+                        </strong>
                     </div>
                     <div>
-                        <strong>$34</strong>/night
+                        <strong>${pack.price}</strong>/night
                     </div>
                     <div>
-                        <strong>$167</strong>total
+                        <strong>${pack.total} </strong>total
                     </div>
                 </div>
             </div>

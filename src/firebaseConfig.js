@@ -1,4 +1,7 @@
-var firebaseConfig = {
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
+const app = firebase.initializeApp({
     apiKey: "AIzaSyApvox3ZJyZB_fuNJXfnLNplclFa6UkE9Y",
     authDomain: "travelgurubd.firebaseapp.com",
     databaseURL: "https://travelgurubd.firebaseio.com",
@@ -6,6 +9,6 @@ var firebaseConfig = {
     storageBucket: "travelgurubd.appspot.com",
     messagingSenderId: "14504361572",
     appId: "1:14504361572:web:3d369b9fdcf1382e436971",
-};
+});
 
-export default firebaseConfig;
+export default app;
